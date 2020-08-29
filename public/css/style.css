@@ -95,6 +95,7 @@ a {
 	padding: 10px;
 	margin-bottom: 15px;
 	background-color: var(--light-color);
+	word-wrap: break-word;
 }
 
 .chat-messages .message .meta {
@@ -118,7 +119,7 @@ a {
 	display: flex;
 }
 
-.chat-form-container input[type='text'] {
+.chat-form-container textarea[type='text'] {
 	font-size: 16px;
 	padding: 5px;
 	height: 40px;
@@ -158,7 +159,7 @@ a {
 	margin-bottom: 5px;
 }
 
-.join-main input[type='text'] {
+.join-main textarea[type='text'] {
 	font-size: 16px;
 	padding: 5px;
 	height: 40px;

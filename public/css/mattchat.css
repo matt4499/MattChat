@@ -1,3 +1,8 @@
+body {
+    display: grid;
+    background-color: black;
+    color: white;
+}
 .chat-form-container {
     margin: 0;
     position: fixed;
@@ -6,8 +11,8 @@
 	padding: 20px 30px;
     background-color: #49494a;
 }
-textarea {
-    padding-left: 50%;
+textarea.materialize-textarea {
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -15,7 +20,15 @@ textarea {
     word-break: break-word;
 }
 .send-button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: inherit;
+    vertical-align: top;
+}
+iframe {
+    margin:0 auto;
+    display:block;
+}
+
+.message-text {
+    padding-bottom: 20px;
+    background-color: gray;
 }

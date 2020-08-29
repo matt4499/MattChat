@@ -1,0 +1,21 @@
+.chat-form-container {
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+	padding: 20px 30px;
+    background-color: #49494a;
+}
+textarea {
+    padding-left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    color: white;
+    word-break: break-word;
+}
+.send-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

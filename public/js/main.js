@@ -42,11 +42,22 @@ socket.on('ytMessage', id => {
 });
 
 socket.on('reconnect_failed', error => {
-    M.toast({html: 'Reconnection failed: ' + error});
+    M.Toast.dismissAll();
+    M.toast({
+        html: 'Reconnection failed: ' + error,
+        displayLength: 999999
+    });
 });
 
-socket.on('reconnecting', error => {
-    M.toast({html: 'Connection lost. Reconnecting...'});
+socket.on('reconnect', attempt => {
+    M.Toast.dismissAll();
+    M.toast({
+        html: 'Reconnected in ' + attempt + ' attempts. ( REFRESH )',
+    });
+});
+
+socket.on('reconnecting', attempt => {
+    M.toast({html: 'Connection lost, Reconnecting: ' + attempt});
 });
 
 // Message submit

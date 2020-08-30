@@ -11,7 +11,7 @@ const { username, room } = Qs.parse(location.search, {
 
 const socket = io({
     reconnectionAttempts: 5,
-    timeout: 5000
+    timeout: 8000
 });
 
 socket.on('customerror', errormsg => {

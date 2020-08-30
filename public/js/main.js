@@ -9,7 +9,10 @@ const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true
 });
 
-const socket = io();
+const socket = io({
+    reconnectionAttempts: 5,
+    timeout: 5000
+});
 
 socket.on('customerror', errormsg => {
     window.alert(errormsg);
@@ -36,6 +39,14 @@ socket.on('message', message => {
 socket.on('ytMessage', id => {
     outputYTembed(id);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+socket.on('reconnect_failed', error => {
+    M.toast({html: 'Reconnection failed: ' + error});
+});
+
+socket.on('reconnecting', error => {
+    M.toast({html: 'Connection lost. Reconnecting...'});
 });
 
 // Message submit

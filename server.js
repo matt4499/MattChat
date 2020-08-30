@@ -8,14 +8,18 @@ const urlregex = require('url-regex');
 
 const formatMessage = require('./utils/messages.js');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users.js');
+const { getAllRooms, createRoom } = require("./utils/rooms.js");
 const botName = "Server";
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+createRoom("Public", "Matt4499", ["None"]);
+
 io.on('connection', socket => {
     console.log("Created new socket: " + socket.id + ' ' + socket.handshake.address);
+    socket.emit('showAllRooms', getAllRooms());
     socket.on('joinRoom', ({username, room}) => {     
         const user = userJoin(socket.id, username, room);
         if(!user){ 

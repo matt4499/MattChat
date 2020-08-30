@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="css/mattchat.css">
+	<link rel="stylesheet" href="css/index.css">
 	<title>MattChat</title>
 </head>
 
@@ -28,13 +29,11 @@
 			<form action="chat.html">
 				<div class="form-control">
 					<label for="username">Username</label>
-					<input type="text" name="username" id="username" placeholder="Enter username..." required />
+					<input type="text" name="username" id="username" placeholder="Enter username..." required autocomplete="off"/>
 				</div>
-				<div class="form-control">
+				<div class="form-control room-list">
 					<label for="room">Room</label>
-					<select name="room" id="room">
-						<option value="Public">Public</option>
-					</select>
+					
 				</div>
 				<button type="submit" class="btn">Join Chat</button>
 			</form>
@@ -53,7 +52,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.14/purify.min.js"
 		integrity="sha512-3hh5P4soaloZlzraI8Lejlwar1DRpK1VlvB7UHbtKWQafIeYKpxctSMMwjv7HG1KAMcpqIeJmZYr1Y0RHuk7VQ=="
 		crossorigin="anonymous"></script>
-	<script src="js/main.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/index.js"></script>
 	<script>
 		$(document).ready(function () {
 			$('select').formSelect();

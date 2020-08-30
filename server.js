@@ -22,6 +22,10 @@ io.on('connection', socket => {
             socket.emit('customerror', "Username already in use");
             return;
         }
+        if(username.toLowerCase() == "matt4499" && socket.handshake.address != "::ffff:192.168.1.222"){
+            socket.emit('customerror', "Username not allowed.");
+            return;
+        }
         socket.join(user.room);
 
         // Welcome current user

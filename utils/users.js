@@ -28,9 +28,16 @@ function getRoomUsers(room) {
     return users.filter(user => user.room === room);
 }
 
+// Kick user from room
+function kickUser(socket) {
+    socket.disconnect(true);
+    return true;
+}
+
 module.exports = {
     userJoin,
     getCurrentUser,
     userLeave,
-    getRoomUsers
+    getRoomUsers,
+    kickUser
 }

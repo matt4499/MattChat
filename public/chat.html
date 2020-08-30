@@ -1,48 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="css/mattchat.css">
-  <title>MattChat</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/mattchat.css">
+    <title>MattChat</title>
 </head>
+
 <body>
-  <div class="chat-container">
-    <header class="chat-header">
-      <h5> MattChat (#<span id="room-name"></span>) </h1> <a href="index.html" class="btn">Leave Room</a>
-    </header>
-    <main class="chat-main">
-      <div class="chat-sidebar" style="padding-top: 50px;">
-        <h6>Users</h3>
-        <ul id="users">
-        </ul>
-      </div>
-      <div class="chat-messages">
-      </div>
+    <nav style="background-color: #dc143c;">
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo center">MattChat</a>
+            <ul class="left hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="row">
+
+            <div class="col s1" style="border-right: 1px solid;">
+                <!-- Grey navigation panel -->
+                <p> Users <span class="badge usercount">0</span> </p>
+
+                <ul class="collection userlist">
+                </ul>
+
+            </div>
+
+            <div class="col s11">
+                <ul class="collection with-header chat-messages" style="height: 710px; overflow-y: scroll;">
+                    <li class="collection-header dark">
+                        <h4>Messages in #<span id="room-name"></span></h4>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
     </main>
-    <div class="chat-form-container">
-      <form id="chat-form">
-        <textarea
-          class="materialize-textarea"
-          id="msg"
-          type="text"
-          placeholder="Message"
-          required
-          autocomplete="off"
-          maxlength="500"
-          data-length="500"
-        ></textarea><button class="waves-effect waves-light btn send-button">Send</button>
-      </form>
-      <!-- <form><input type="file" class="waves-effect waves-light btn send-button"></input></form> -->
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.14/purify.min.js" integrity="sha512-3hh5P4soaloZlzraI8Lejlwar1DRpK1VlvB7UHbtKWQafIeYKpxctSMMwjv7HG1KAMcpqIeJmZYr1Y0RHuk7VQ==" crossorigin="anonymous"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="js/main.js"></script>
+    <footer class="page-footer" style="background-color: black;">
+        <div class="container">
+            <div class="row" style="padding-left: 25%;">
+                <form id="chat-form">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">message</i>
+                    <input id="msg" type="text" required>
+                    <label for="msg">Message</label>
+                </div>
+                <div class="input-field col s6">
+
+                    <button class="btn waves-effect waves-light black" type="submit" name="action">Send
+                        <i class="material-icons right">send</i>
+                    </button>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js"
+        integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.14/purify.min.js"
+        integrity="sha512-3hh5P4soaloZlzraI8Lejlwar1DRpK1VlvB7UHbtKWQafIeYKpxctSMMwjv7HG1KAMcpqIeJmZYr1Y0RHuk7VQ=="
+        crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>

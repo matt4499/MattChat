@@ -1,34 +1,38 @@
 body {
-    display: grid;
-    background-color: black;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #363636;
     color: white;
-}
-.chat-form-container {
-    margin: 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-	padding: 20px 30px;
-    background-color: #49494a;
-}
-textarea.materialize-textarea {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    color: white;
-    word-break: break-word;
-}
-.send-button {
-    position: inherit;
-    vertical-align: top;
-}
-iframe {
-    margin:0 auto;
-    display:block;
+    scrollbar-width: thin;          /* "auto" or "thin"  */
+    scrollbar-color: red black;   /* scroll thumb & track */ 
+  }
+
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+  *::-webkit-scrollbar-track {
+    background: black;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: red;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+  input, span {
+      color: white !important;
+  }
+  ul.collection, li.dark {
+      background-color: black !important;
+  }
+
+ul li {
+    word-break: break-all;
 }
 
-.message-text {
-    padding-bottom: 20px;
-    background-color: gray;
+code {
+    background-color: #363636;
 }

@@ -1,12 +1,12 @@
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector(".chat-messages");
 const roomName = document.getElementById('room-name');
-const userList = document.getElementById('users');
+const userList = $('ul[class="userlist"]');
 const chatInput = document.getElementById('msg');
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
-ignoreQueryPrefix: true
+    ignoreQueryPrefix: true
 });
 
 const socket = io();
@@ -27,7 +27,7 @@ socket.on('roomUsers', ({ room, users }) => {
 
 // Message from server
 socket.on('message', message => {
-    if(message){
+    if (message) {
         outputMessage(message);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -35,6 +35,7 @@ socket.on('message', message => {
 
 socket.on('ytMessage', id => {
     outputYTembed(id);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
 // Message submit
@@ -56,22 +57,24 @@ function outputMessage(message) {
     const div = document.createElement('div');
     div.classList.add('message');
     div.innerHTML = `
-    <div class="container message-container">
-    <div class="message-text">
-    <p >${message.username} <span>${message.time}</span></p>
-  <p>
-    ${message.text}
-  </p>
-  </div>
-  </div>`;
+    <li class="collection-item avatar dark" id="msg-1231213">
+                        <i class="material-icons circle">account_circle</i>
+                        <span class="title">${message.username} | ${message.time}</span>
+                        <p>
+                            ${message.text}
+                        </p>
+                    </li>
+    `;
     document.querySelector('.chat-messages').appendChild(div);
 }
 
-function outputYTembed(id){
+function outputYTembed(id) {
     const div = document.createElement('div');
     div.classList.add('message');
     div.innerHTML = `
+    <div style="padding-left: 4.5%;">
     <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/${id}?controls=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
     `;
     document.querySelector('.chat-messages').appendChild(div);
 }
@@ -79,13 +82,18 @@ function outputYTembed(id){
 // Add room name to dom
 function outputRoomName(room) {
     roomName.innerText = room;
+    document.title = "MattChat | " + room;
 }
 
 // Add users to dom
-function outputUsers(users){
-    userList.innerHTML = `
-    ${users.map(user => `<li> ${user.username} </li>`).join('')}
-    `;
+function outputUsers(users) {
+    $(".userlist").empty();
+    var usercount = 0;
+    users.forEach(function(user){
+        usercount++;
+        $(".userlist").append(`<li class="collection-item dark">${user.username}</li>`);
+    });
+    $(".usercount").text(usercount);
 }
 
 // function geeks(event) { 
@@ -97,7 +105,7 @@ function outputUsers(users){
 //     }
 // } 
 
-$(document).ready(function() {
-    $('textarea').characterCounter();
+$(document).ready(function () {
+    $('.msg').characterCounter();
     $('.character-counter').css("color", "white");
 });

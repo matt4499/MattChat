@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-createRoom("Public", "Matt4499", ["None"]);
+createRoom("public", "Public", "Matt4499", ["None"]);
 
 io.on('connection', socket => {
     console.log("Created new socket: " + socket.id + ' ' + socket.handshake.address);

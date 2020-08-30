@@ -1,8 +1,8 @@
 const rooms = [];
 
-function createRoom(name, owner, mods) {
+function createRoom(type, name, owner, mods) {
     console.log("[SERVER] Creating new room: " + name + " " + owner);
-    const room = { name, owner, mods };
+    const room = { type, name, owner, mods };
     if (rooms.find(room => room.name == name)) { // If the room already exists
         return false; // return false because we cant create the room
     } else {

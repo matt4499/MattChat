@@ -57,7 +57,7 @@ socket.on('reconnect', attempt => {
 });
 
 socket.on('reconnecting', attempt => {
-    M.toast({html: 'Connection lost, Reconnecting: ' + attempt});
+    M.toast({ html: 'Connection lost, Reconnecting: ' + attempt });
 });
 
 // Message submit
@@ -111,7 +111,7 @@ function outputRoomName(room) {
 function outputUsers(users) {
     $(".userlist").empty();
     var usercount = 0;
-    users.forEach(function(user){
+    users.forEach(function (user) {
         usercount++;
         $(".userlist").append(`<li class="collection-item dark">${user.username}</li>`);
     });
@@ -120,5 +120,5 @@ function outputUsers(users) {
 
 $(document).ready(function () {
     $('input.msg').characterCounter();
-    $('.character-counter').css("color", "white"); 
+    $('.character-counter').css("color", "white");
 });

@@ -15,6 +15,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket => {
+    console.log("Created new socket: " + socket.id + ' ' + socket.handshake.address);
     socket.on('joinRoom', ({username, room}) => {     
         const user = userJoin(socket.id, username, room);
         if(!user){ 

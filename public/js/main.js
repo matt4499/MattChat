@@ -118,16 +118,7 @@ function outputUsers(users) {
     $(".usercount").text(usercount);
 }
 
-// function geeks(event) { 
-//     // 13 is the keycode for "enter" 
-//     if (event.keyCode == 13 && !event.shiftKey) { 
-//         e.preventDefault();
-//         $('.send-button').click();
-//         return false;
-//     }
-// } 
-
 $(document).ready(function () {
-    $('.msg').characterCounter();
-    $('.character-counter').css("color", "white");
+    $('input.msg').characterCounter();
+    $('.character-counter').css("color", "white"); 
 });

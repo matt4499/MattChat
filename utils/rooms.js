@@ -10,11 +10,20 @@ function createRoom(type, name, owner, mods) {
     }
 }
 
+function roomExists(name) {
+    if (rooms.find(room => room.name == name)) { // If the room already exists
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function getAllRooms() {
     return rooms;
 }
 
 module.exports = {
     createRoom,
-    getAllRooms
+    getAllRooms,
+    roomExists
 }

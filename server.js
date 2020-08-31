@@ -115,10 +115,30 @@ io.on('connection', socket => {
         }
     });
     // Broadcast when a user disconnects
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason) => {
+        var RealReason;
+        switch(reason){
+            case "transport close":
+                RealReason = "Disconnected Normally";
+                break;
+            case "client namespace disconnect":
+                RealReason = "Manually terminated socket?"
+                break;
+            case "server namespace disocnnect":
+                RealReason = "Connection terminated by server";
+                break;
+            case "ping timeout":
+                RealReason = "User timed out";
+                break;
+            case "transport error":
+                RealReason = "An error occured"
+                break;
+            default:
+                RealReason = "Unknown Reason";
+        }
         const user = userLeave(socket.id);
         if (user) {
-            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has disconnected`));
+            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has disconnected: ${RealReason}` ));
             // Send users and room info
             io.to(user.room).emit('roomUsers', {
                 room: user.room,

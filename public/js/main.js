@@ -52,8 +52,11 @@ socket.on('reconnect_failed', error => {
 socket.on('reconnect', attempt => {
     M.Toast.dismissAll();
     M.toast({
-        html: 'Reconnected in ' + attempt + ' attempts. ( REFRESH )',
+        html: 'Reconnected in ' + attempt + ' attempts.',
     });
+    setTimeout(function(){ 
+        window.location.reload();
+    }, 3000);
 });
 
 socket.on('reconnecting', attempt => {

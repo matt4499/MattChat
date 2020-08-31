@@ -1,18 +1,28 @@
 const path = require('path');
 const http = require('http');
+const https = require('https');
 const express = require('express');
 const socketio = require('socket.io');
 const Autolinker = require('autolinker');
+const fs = require('fs');
 const markdown = require('markdown').markdown;
 
 const formatMessage = require('./utils/messages.js');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users.js');
 const { getAllRooms, createRoom } = require("./utils/rooms.js");
-const { truncate } = require('fs');
+const { truncate, fstat } = require('fs');
 const botName = "Server";
 
 const app = express();
-const server = http.createServer(app);
+
+const server = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/mattchat.us.to/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/mattchat.us.to/cert.pem'),
+    ca: fs.readFileSync('/etc/letsencrypt/live/mattchat.us.to/chain.pem')
+}, app).listen(443, () => {
+    console.log("[SERVER] HTTPS server started")
+});
+
 const io = socketio(server);
 
 createRoom("public", "Public", "Matt4499", ["None"]);
@@ -117,7 +127,6 @@ io.on('connection', socket => {
         }
     });
 });
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({
     extended: true
@@ -127,11 +136,10 @@ app.use(express.urlencoded({
 
 // });
 
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, './public', "404.html"));
     console.log("[SERVER] " + req.ip + " just error 404'd while looking for: " + req.originalUrl);
 });
-server.listen(80, () => console.log("[Server] Now running on PORT 80"));
 
 function youtube_parser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;

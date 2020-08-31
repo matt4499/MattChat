@@ -52,9 +52,9 @@ code {
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #dc143c, 0 0 40px #dc143c, 0 0 50px #dc143c, 0 0 60px #dc143c, 0 0 70px #dc143c;
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #dc143c, 0 0 20px #dc143c, 0 0 25px #dc143c, 0 0 30px #dc143c, 0 0 35px #dc143c;
     }
     to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #dc143c, 0 0 40px #dc143c, 0 0 50px #dc143c, 0 0 60px #dc143c, 0 0 70px #dc143c, 0 0 80px #dc143c;
+        text-shadow: 0 0 10px #fff, 0 0 15px #dc143c, 0 0 20px #dc143c, 0 0 25px #dc143c, 0 0 30px #dc143c, 0 0 35px #dc143c, 0 0 40px #dc143c;
     }
 }

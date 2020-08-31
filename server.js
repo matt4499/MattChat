@@ -117,7 +117,7 @@ io.on('connection', socket => {
     // Broadcast when a user disconnects
     socket.on('disconnect', (reason) => {
         var RealReason;
-        switch(reason){
+        switch (reason) {
             case "transport close":
                 RealReason = "Disconnected Normally";
                 break;
@@ -139,7 +139,7 @@ io.on('connection', socket => {
         const user = userLeave(socket.id);
         if (user) {
             console.log(`${user.username} disconnected due to ${RealReason}`);
-            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has disconnected: ${RealReason}` ));
+            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has disconnected: ${RealReason}`));
             // Send users and room info
             io.to(user.room).emit('roomUsers', {
                 room: user.room,
@@ -157,7 +157,7 @@ app.use(express.urlencoded({
 
 // });
 
-app.get('*', function (req, res) {
+app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, './public', "404.html"));
     console.log("[SERVER] " + req.ip + " just error 404'd while looking for: " + req.originalUrl);
 });

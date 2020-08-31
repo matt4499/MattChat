@@ -4,30 +4,37 @@ body {
     flex-direction: column;
     background-color: #363636;
     color: white;
-    scrollbar-width: thin;          /* "auto" or "thin"  */
-    scrollbar-color: red black;   /* scroll thumb & track */ 
-  }
+    scrollbar-width: thin;
+    /* "auto" or "thin"  */
+    scrollbar-color: red black;
+    /* scroll thumb & track */
+}
 
-  *::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width: 12px;
-  }
-  *::-webkit-scrollbar-track {
+}
+
+*::-webkit-scrollbar-track {
     background: black;
-  }
-  *::-webkit-scrollbar-thumb {
+}
+
+*::-webkit-scrollbar-thumb {
     background-color: red;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
 
-  input, span {
-      color: white !important;
-  }
-  ul.collection, li.dark {
-      background-color: black !important;
-  }
+input,
+span {
+    color: white !important;
+}
+
+ul.collection,
+li.dark {
+    background-color: black !important;
+}
 
 ul li {
     word-break: break-all;
@@ -35,4 +42,19 @@ ul li {
 
 code {
     background-color: gray;
+}
+
+.rank {
+    -webkit-animation: glow 0.75s ease-in-out infinite alternate;
+    -moz-animation: glow 0.75s ease-in-out infinite alternate;
+    animation: glow 0.75s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #dc143c, 0 0 40px #dc143c, 0 0 50px #dc143c, 0 0 60px #dc143c, 0 0 70px #dc143c;
+    }
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #dc143c, 0 0 40px #dc143c, 0 0 50px #dc143c, 0 0 60px #dc143c, 0 0 70px #dc143c, 0 0 80px #dc143c;
+    }
 }

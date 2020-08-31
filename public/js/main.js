@@ -54,7 +54,7 @@ socket.on('reconnect', attempt => {
     M.toast({
         html: 'Reconnected in ' + attempt + ' attempts.',
     });
-    setTimeout(function(){ 
+    setTimeout(function() {
         window.location.reload();
     }, 3000);
 });
@@ -81,7 +81,18 @@ chatForm.addEventListener('submit', (e) => {
 function outputMessage(message) {
     const div = document.createElement('div');
     div.classList.add('message');
-    div.innerHTML = `
+    if (message.username == "Matt4499") {
+        div.innerHTML = `
+        <li class="collection-item avatar dark" id="msg-1231213">
+                            <i class="material-icons circle">account_circle</i>
+                            <span class="title rank">${message.username} | ${message.time}</span>
+                            <p>
+                                ${message.text}
+                            </p>
+                        </li>
+        `;
+    } else {
+        div.innerHTML = `
     <li class="collection-item avatar dark" id="msg-1231213">
                         <i class="material-icons circle">account_circle</i>
                         <span class="title">${message.username} | ${message.time}</span>
@@ -90,6 +101,7 @@ function outputMessage(message) {
                         </p>
                     </li>
     `;
+    }
     document.querySelector('.chat-messages').appendChild(div);
 }
 
@@ -114,14 +126,18 @@ function outputRoomName(room) {
 function outputUsers(users) {
     $(".userlist").empty();
     var usercount = 0;
-    users.forEach(function (user) {
+    users.forEach(function(user) {
         usercount++;
-        $(".userlist").append(`<li class="collection-item dark">${user.username}</li>`);
+        if (user.username == "Matt4499") {
+            $(".userlist").append(`<li class="collection-item dark rank">${user.username}</li>`);
+        } else {
+            $(".userlist").append(`<li class="collection-item dark">${user.username}</li>`);
+        }
     });
     $(".usercount").text(usercount);
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
     $('input.msg').characterCounter();
     $('.character-counter').css("color", "white");
 });

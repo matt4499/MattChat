@@ -122,7 +122,7 @@ io.on('connection', socket => {
                 RealReason = "Disconnected Normally";
                 break;
             case "client namespace disconnect":
-                RealReason = "Manually terminated socket?"
+                RealReason = "Manually terminated socket";
                 break;
             case "server namespace disocnnect":
                 RealReason = "Connection terminated by server";
@@ -131,13 +131,14 @@ io.on('connection', socket => {
                 RealReason = "User timed out";
                 break;
             case "transport error":
-                RealReason = "An error occured"
+                RealReason = "An error occured";
                 break;
             default:
                 RealReason = "Unknown Reason";
         }
         const user = userLeave(socket.id);
         if (user) {
+            console.log(`${user.username} disconnected due to ${RealReason}`);
             io.to(user.room).emit('message', formatMessage(botName, `${user.username} has disconnected: ${RealReason}` ));
             // Send users and room info
             io.to(user.room).emit('roomUsers', {

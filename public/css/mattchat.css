@@ -50,11 +50,26 @@ code {
     animation: glow 0.75s ease-in-out infinite alternate;
 }
 
+.system {
+    -webkit-animation: system 0.75s ease-in-out infinite alternate;
+    -moz-animation: system 0.75s ease-in-out infinite alternate;
+    animation: system 0.75s ease-in-out infinite alternate;
+}
+
 @keyframes glow {
     from {
         text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #dc143c, 0 0 20px #dc143c, 0 0 25px #dc143c, 0 0 30px #dc143c, 0 0 35px #dc143c;
     }
     to {
         text-shadow: 0 0 10px #fff, 0 0 15px #dc143c, 0 0 20px #dc143c, 0 0 25px #dc143c, 0 0 30px #dc143c, 0 0 35px #dc143c, 0 0 40px #dc143c;
+    }
+}
+
+@keyframes system {
+    from {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #058f00, 0 0 20px #058f00, 0 0 25px #058f00, 0 0 30px #058f00, 0 0 35px #058f00;
+    }
+    to {
+        text-shadow: 0 0 10px #fff, 0 0 15px #058f00, 0 0 20px #058f00, 0 0 25px #058f00, 0 0 30px #058f00, 0 0 35px #058f00, 0 0 40px #058f00;
     }
 }

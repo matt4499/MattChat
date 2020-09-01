@@ -81,26 +81,39 @@ chatForm.addEventListener('submit', (e) => {
 function outputMessage(message) {
     const div = document.createElement('div');
     div.classList.add('message');
-    if (message.username == "Matt4499") {
-        div.innerHTML = `
-        <li class="collection-item avatar dark" id="msg-1231213">
-                            <i class="material-icons circle">account_circle</i>
-                            <span class="title rank">${message.username} | ${message.time}</span>
-                            <p>
-                                ${message.text}
-                            </p>
-                        </li>
-        `;
-    } else {
-        div.innerHTML = `
-    <li class="collection-item avatar dark" id="msg-1231213">
-                        <i class="material-icons circle">account_circle</i>
-                        <span class="title">${message.username} | ${message.time}</span>
-                        <p>
-                            ${message.text}
-                        </p>
-                    </li>
-    `;
+    switch (message.username) {
+        case "System":
+            div.innerHTML = `
+            <li class="collection-item avatar dark" id="msg-1231213">
+                <i class="material-icons circle">message</i>
+                <span class="title system">${message.username} | ${message.time}</span>
+                <p>
+                ${message.text}
+                </p>
+            </li>
+            `;
+            break;
+        case "Matt4499":
+            div.innerHTML = `
+            <li class="collection-item avatar dark" id="msg-1231213">
+                <i class="material-icons circle">account_circle</i>
+                <span class="title rank">${message.username} | ${message.time}</span>
+                <p>
+                ${message.text}
+                </p>
+            </li>
+            `;
+            break;
+        default:
+            div.innerHTML = `
+            <li class="collection-item avatar dark" id="msg-1231213">
+                <i class="material-icons circle">account_circle</i>
+                <span class="title">${message.username} | ${message.time}</span>
+                <p>
+                ${message.text}
+                </p>
+            </li>
+            `;
     }
     document.querySelector('.chat-messages').appendChild(div);
 }

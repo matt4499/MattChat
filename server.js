@@ -11,7 +11,7 @@ const formatMessage = require('./utils/messages.js');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users.js');
 const { getAllRooms, createRoom } = require("./utils/rooms.js");
 const { truncate, fstat } = require('fs');
-const botName = "Server";
+const botName = "System";
 
 const app = express();
 
@@ -37,6 +37,10 @@ io.on('connection', socket => {
             return;
         }
         if (username.toLowerCase() == "matt4499" && socket.handshake.address != "::ffff:192.168.1.222") {
+            socket.emit('customerror', "Username not allowed.");
+            return;
+        }
+        if (username.toLowerCase() == "system" && socket.handshake.address != "::ffff:192.168.1.222") {
             socket.emit('customerror', "Username not allowed.");
             return;
         }
@@ -119,7 +123,7 @@ io.on('connection', socket => {
         var RealReason;
         switch (reason) {
             case "transport close":
-                RealReason = "Disconnected Normally";
+                RealReason = "User Left";
                 break;
             case "client namespace disconnect":
                 RealReason = "Manually terminated socket";

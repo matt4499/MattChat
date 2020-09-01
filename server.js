@@ -162,6 +162,12 @@ app.get('*', function(req, res) {
     console.log("[SERVER] " + req.ip + " just error 404'd while looking for: " + req.originalUrl);
 });
 
+http.createServer(function(req, res) {
+    console.log("[HTTP] User was redirected to HTTPS");
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
+
 function youtube_parser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     var match = String(url).match(regExp);

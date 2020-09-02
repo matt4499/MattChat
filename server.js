@@ -9,8 +9,8 @@ const markdown = require('markdown').markdown;
 
 const formatMessage = require('./utils/messages.js');
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users.js');
-const { getAllRooms, createRoom } = require("./utils/rooms.js");
-const { truncate, fstat } = require('fs');
+const { getAllRooms, createRoom, setRoomLastMessage, getRoomLastMessage } = require("./utils/rooms.js");
+const { format } = require('path');
 const botName = "System";
 
 const app = express();
@@ -25,7 +25,7 @@ const server = https.createServer({
 
 const io = socketio(server);
 
-createRoom("public", "Public", "Matt4499", ["None"]);
+createRoom("public", "General", "System", ["Matt4499"]);
 
 io.on('connection', socket => {
     console.log("Created new socket: " + socket.id + ' ' + socket.handshake.address);
@@ -47,11 +47,14 @@ io.on('connection', socket => {
         socket.join(user.room);
 
         // Welcome current user
-        socket.emit('message', formatMessage(botName, `Welcome to ${user.room}`)); //Emits only to user connected
+        const WelcomeMessage = formatMessage(botName, `Welcome to ${user.room}`);
+        socket.emit('message', WelcomeMessage); //Emits only to user connected
+        setRoomLastMessage(user.room, WelcomeMessage);
 
         // Broadcast when a user connects
-        socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined the chat`)); //Emits to all users EXCEPT the one connecting
-
+        const JoinMessage = formatMessage(botName, `${user.username} has joined the chat`);
+        socket.broadcast.to(user.room).emit('message', JoinMessage); //Emits to all users EXCEPT the one connecting
+        setRoomLastMessage(user.room, JoinMessage);
         // Send users and room info
         io.to(user.room).emit('roomUsers', {
             room: user.room,
@@ -62,38 +65,34 @@ io.on('connection', socket => {
     // Listen for chatMessage
     socket.on('chatMessage', (msg) => {
         const user = getCurrentUser(socket.id);
-        if (!user) return;
+        const message = formatMessage(user.username, msg);
+        if (!user || !message) return;
         const regex = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-_]+)/gmi;
+        const RoomsLastMessage = getRoomLastMessage(user.room);
+        if (RoomsLastMessage.username == user.username) {
+            console.log("combining");
+            setRoomLastMessage(user.room, message);
+            io.to(user.room).emit('combineMessage', RoomsLastMessage.id, message);
+            return;
+        }
         if (String(msg).match(regex)) {
             var linkedMsg = Autolinker.link(msg);
             io.to(user.room).emit('message', formatMessage(user.username, linkedMsg));
+            setRoomLastMessage(user.room, message);
             return io.to(user.room).emit('ytMessage', youtube_parser(String(msg).match(regex)));
         }
         var urlregex = new RegExp(
             "^" +
-            // protocol identifier (optional)
-            // short syntax // still required
             "(?:(?:(?:https?|ftp):)?\\/\\/)" +
-            // user:pass BasicAuth (optional)
             "(?:\\S+(?::\\S*)?@)?" +
             "(?:" +
-            // IP address exclusion
-            // private & local networks
             "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
             "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
             "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
-            // IP address dotted notation octets
-            // excludes loopback network 0.0.0.0
-            // excludes reserved space >= 224.0.0.0
-            // excludes network & broadcast addresses
-            // (first & last IP address of each class)
             "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
             "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
             "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
             "|" +
-            // host & domain names, may end with dot
-            // can be replaced by a shortest alternative
-            // (?![-_])(?:[-\\w\\u00a1-\\uffff]{0,63}[^-_]\\.)+
             "(?:" +
             "(?:" +
             "[a-z0-9\\u00a1-\\uffff]" +
@@ -101,22 +100,20 @@ io.on('connection', socket => {
             ")?" +
             "[a-z0-9\\u00a1-\\uffff]\\." +
             ")+" +
-            // TLD identifier name, may end with dot
             "(?:[a-z\\u00a1-\\uffff]{2,}\\.?)" +
             ")" +
-            // port number (optional)
             "(?::\\d{2,5})?" +
-            // resource path (optional)
             "(?:[/?#]\\S*)?" +
             "$", "i"
         );
-        if (String(msg).match(urlregex)) {
-            var linkedMsg = Autolinker.link(msg);
-            io.to(user.room).emit('message', formatMessage(user.username, linkedMsg));
+        if (String(message.text).match(urlregex)) {
+            var linkedMsg = Autolinker.link(message.text);
+            io.to(user.room).emit('message', message);
         } else {
             var MD = markdown.toHTML(msg);
-            io.to(user.room).emit('message', formatMessage(user.username, MD));
+            io.to(user.room).emit('message', message);
         }
+        setRoomLastMessage(user.room, message);
     });
     // Broadcast when a user disconnects
     socket.on('disconnect', (reason) => {
@@ -163,11 +160,12 @@ app.use(express.urlencoded({
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, './public', "404.html"));
-    console.log("[SERVER] " + req.ip + " just error 404'd while looking for: " + req.originalUrl);
+    res.end();
+    console.log("[SERVER] 404 | " + req.ip + " | " + req.originalUrl);
 });
 
 http.createServer(function(req, res) {
-    console.log("[HTTP] User was redirected to HTTPS");
+    console.log("[HTTP] User was redirected to HTTPS: " + req.connection.remoteAddress);
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
 }).listen(80);

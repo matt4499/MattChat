@@ -63,6 +63,13 @@ socket.on('reconnecting', attempt => {
     M.toast({ html: 'Connection lost, Reconnecting: ' + attempt });
 });
 
+
+socket.on('combineMessage', (oldid, message) => {
+    console.log("receieved combineMessage" + oldid + " " + message.text);
+    console.log(`li#${oldid}`);
+    $(`li#${oldid}`).append(`<p>${message.text}</p>`);
+});
+
 // Message submit
 chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -84,7 +91,7 @@ function outputMessage(message) {
     switch (message.username) {
         case "System":
             div.innerHTML = `
-            <li class="collection-item avatar dark" id="msg-1231213">
+            <li class="collection-item avatar dark" id="${message.id}">
                 <i class="material-icons circle">message</i>
                 <span class="title system">${message.username} | ${message.time}</span>
                 <p>
@@ -95,7 +102,7 @@ function outputMessage(message) {
             break;
         case "Matt4499":
             div.innerHTML = `
-            <li class="collection-item avatar dark" id="msg-1231213">
+            <li class="collection-item avatar dark" id="${message.id}">
                 <i class="material-icons circle">account_circle</i>
                 <span class="title rank">${message.username} | ${message.time}</span>
                 <p>
@@ -106,7 +113,7 @@ function outputMessage(message) {
             break;
         default:
             div.innerHTML = `
-            <li class="collection-item avatar dark" id="msg-1231213">
+            <li class="collection-item avatar dark" id="${message.id}">
                 <i class="material-icons circle">account_circle</i>
                 <span class="title">${message.username} | ${message.time}</span>
                 <p>

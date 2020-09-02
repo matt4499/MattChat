@@ -15,12 +15,12 @@ socket.on('showAllRooms', rooms => {
         window.location.replace("http://mattchat.us.to");
     }
     $('.room-list').empty();
-    rooms.forEach(function (room) {
+    rooms.forEach(function(room) {
         console.log("[CLIENT] Recieved room: '" + room.name + "' Owner: " + room.owner + " Mods: " + room.mods);
         $(".room-list").append(`
         <select name="room" id="room">
-						<option value="${room.name}">(${room.type}) '${room.name}' owned by: ${room.owner}</option>
-					</select>
+			<option value="${room.name}">[${room.type}] '${room.name}' owned by: ${room.owner}     |     Admins: ${room.mods}</option>
+		</select>
         `); // add room to the list of rooms
         $('select').formSelect(); // refresh the list
     });

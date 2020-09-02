@@ -4,6 +4,7 @@ const https = require('https');
 const express = require('express');
 const socketio = require('socket.io');
 const Autolinker = require('autolinker');
+const favicon = require('serve-favicon');
 const fs = require('fs');
 const markdown = require('markdown').markdown;
 
@@ -71,7 +72,6 @@ io.on('connection', socket => {
         const RoomsLastMessage = getRoomLastMessage(user.room);
         if (RoomsLastMessage.username == user.username) {
             console.log("combining");
-            setRoomLastMessage(user.room, message);
             io.to(user.room).emit('combineMessage', RoomsLastMessage.id, message);
             return;
         }
@@ -153,7 +153,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({
     extended: true
 }));
-
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.post('/create-room', (req, res) => {
 
 // });

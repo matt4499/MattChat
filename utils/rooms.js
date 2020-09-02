@@ -37,9 +37,9 @@ function setRoomLastMessage(room3, message) {
     if (room) {
         room.LastMessage = {};
         room.LastMessage = message;
-        console.log("[SERVER] Changing room " + room.name + " lastMessage to " + message.username + " with id: " + message.id);
+        // console.log("[SERVER] Changing room " + room.name + " lastMessage to " + message.username + " with id: " + message.id);
     } else {
-        console.log("could not set room last message");
+        // console.log("could not set room last message");
         return false;
     }
 }

@@ -10,7 +10,7 @@ const { username, room } = Qs.parse(location.search, {
 });
 
 const socket = io({
-    reconnectionAttempts: 5,
+    reconnectionAttempts: 10,
     timeout: 8000
 });
 
@@ -56,7 +56,7 @@ socket.on('reconnect', attempt => {
     });
     setTimeout(function() {
         window.location.reload();
-    }, 3000);
+    }, 1500);
 });
 
 socket.on('reconnecting', attempt => {
@@ -65,8 +65,6 @@ socket.on('reconnecting', attempt => {
 
 
 socket.on('combineMessage', (oldid, message) => {
-    console.log("receieved combineMessage" + oldid + " " + message.text);
-    console.log(`li#${oldid}`);
     $(`li#${oldid}`).append(`<p>${message.text}</p>`);
 });
 

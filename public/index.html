@@ -62,13 +62,34 @@
                 </form>
             </div>
             <div class="container col s6">
-                <h1> Create a Room </h1>
+                <h1> Create a Room (coming soon) </h1>
                 <form action="#">
+                    <div class="form-control">
+                        <label for="username">Username</label>
+                        <input disabled type="text" name="username" id="username" placeholder="Enter username..." required autocomplete="off" />
+                    </div>
                     <div class="form-control">
                         <label for="username">Room Name</label>
                         <input disabled type="text" name="roomname" id="roomname" placeholder="Enter a room name..." required autocomplete="off" maxlength="20" />
                     </div>
-                    <button disabled type="submit" class="btn">Create Room</button>
+                    <div class="form-control">
+                        <label for="roomtype">Room Type</label>
+                        <div class="switch">
+                            <label>
+                              Public
+                              <input type="checkbox" disabled>
+                              <span class="lever"></span>
+                              Private
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="bannedusers">Banned Users (type name then hit enter)</label>
+                        <div class="chips">
+                            <input class="custom-class" disabled>
+                        </div>
+                    </div>
+                    <button disabled type="submit" class="btn" style="margin-top: 2%;">Create Room</button>
                 </form>
             </div>
         </div>

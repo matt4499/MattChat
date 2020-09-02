@@ -2,3 +2,15 @@ span {
     background-color: black;
     color: white;
 }
+
+.switch label input[type="checkbox"]:checked+.lever {
+    background-color: #dc143c;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: white;
+}
+
+label {
+    color: white;
+}

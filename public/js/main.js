@@ -158,6 +158,6 @@ function outputUsers(users) {
 }
 
 $(document).ready(function() {
-    $('input.msg').characterCounter();
+    $('input#msg').characterCounter();
     $('.character-counter').css("color", "white");
 });

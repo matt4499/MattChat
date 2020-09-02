@@ -4,7 +4,7 @@ const socket = io({
 });
 
 const roomlist = $('roomlist');
-
+$('.chips').chips();
 // Join chatroom
 socket.emit('getAllRooms');
 
